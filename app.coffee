@@ -10,6 +10,7 @@ exphbs  = require('express3-handlebars')
 
 @routes = {
   room_schedule: require('./routes/room_schedule')(@app)
+  index: require('./routes/index')(@app)
 }
 
 @app.listen(process.env.PORT || nconf.get('server').port)
