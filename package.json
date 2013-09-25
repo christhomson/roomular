@@ -10,7 +10,8 @@
     "coffee-script": ">= 1.6.3",
     "nconf": ">= 0.6.7",
     "express": "3.x",
-    "request": ">= 2.x"
+    "request": ">= 2.x",
+    "handlebars": "~1.0.12"
   },
   "scripts": {}
 }
