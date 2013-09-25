@@ -13,8 +13,8 @@ module.exports = class API
 
     request(options, (err, res, body) ->
       try
-        body = JSON.parse(body)
-        done(null, body)
+        classes = JSON.parse(body).response.data.result
+        done(null, classes)
       catch e
         done(err, {})
     )
