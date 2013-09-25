@@ -1,0 +1,6 @@
+{
+  "server": {
+    "port": 8080
+  },
+  "uwaterloo_api_key": "Get this from http://api.uwaterloo.ca/#!/keygen"
+}
