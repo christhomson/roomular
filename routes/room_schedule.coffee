@@ -44,6 +44,7 @@ module.exports = (app) ->
           clas.Days.match(days[day].regex)?
         )
 
-      res.render('room_schedule', { days: days })
+      hasClasses = classes.length > 0
+      res.render('room_schedule', { days: days, hasClasses: hasClasses})
     )
   )

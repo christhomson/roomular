@@ -12,10 +12,11 @@ module.exports = class API
     }
     request(options, (err, res, body) ->
       try
-        classes = JSON.parse(body).response.data.result
+        data = JSON.parse(body).response.data
+        classes = if data is "" then [] else data.result
         done(null, classes)
       catch e
-        done(err, {})
+        done(err, [])
     )
 
   apiBaseWithKey: ->

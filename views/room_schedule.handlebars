@@ -1,8 +1,12 @@
-{{#each days}}
-  <h2>{{dayName}}:</h2>
-  <ul>
-  {{#each classes}}
-    <li>{{DeptAcronym}} {{Number}}: {{Title}} ({{StartTime}} - {{EndTime}} {{Days}})</li>
-  {{/each}}
-  </ul>
-{{/each}}
+{{#hasClasses}} 
+	{{#each days}}
+	  <h2>{{dayName}}:</h2>
+	  <ul>
+	  {{#each classes}}
+	    <li>{{DeptAcronym}} {{Number}}: {{Title}} ({{StartTime}} - {{EndTime}} {{Days}})</li>
+	  {{/each}}
+	  </ul>
+	{{/each}}
+{{else}}
+	<h2>Room has no classes.</h2>
+{{/hasClasses}}
