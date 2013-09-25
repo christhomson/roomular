@@ -1,5 +1,8 @@
-<ul>
-{{#each classes}}
-  <li>{{DeptAcronym}} {{Number}}: {{Title}} ({{StartTime}} - {{EndTime}} {{Days}})</li>
+{{#each days}}
+  <h2>{{dayName}}:</h2>
+  <ul>
+  {{#each classes}}
+    <li>{{DeptAcronym}} {{Number}}: {{Title}} ({{StartTime}} - {{EndTime}} {{Days}})</li>
+  {{/each}}
+  </ul>
 {{/each}}
-</ul>

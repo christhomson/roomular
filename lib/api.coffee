@@ -10,7 +10,6 @@ module.exports = class API
       uri: apiURL
       headers: {'User-Agent': 'Roomular (https://github.com/christhomson/roomular)'}
     }
-
     request(options, (err, res, body) ->
       try
         classes = JSON.parse(body).response.data.result
