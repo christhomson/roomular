@@ -7,6 +7,7 @@ exphbs  = require('express3-handlebars')
 
 @app.engine('handlebars', exphbs({defaultLayout: 'main'}))
 @app.set('view engine', 'handlebars')
+@app.use(express.static(__dirname + '/public'));
 
 @routes = {
   room_schedule: require('./routes/room_schedule')(@app)

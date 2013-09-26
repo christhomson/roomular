@@ -1,0 +1,6 @@
+@import 'sticky-footer.css';
+
+#find_button {
+  float: right;
+  margin-top: 10px;
+}
