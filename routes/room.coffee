@@ -57,6 +57,29 @@ module.exports = (app) ->
         hours = endTime[0] - startTime[0]
         minutes = endTime[1] - startTime[1]
         c.halfHours = (hours * 2) + (Math.ceil(minutes / 30.0))
+        c.Instructor = c.Instructor.split(',').reverse().join(' ') || "Unknown Instructor"
+
+        # See https://uwaterloo.ca/quest/undergraduate-students/glossary-of-terms.
+        c.classType = switch(c.Section.split(' ')[0])
+          when 'CLN' then 'Clinic'
+          when 'DIS' then 'Discussion'
+          when 'ENS' then 'Ensemble'
+          when 'ESS' then 'Essay'
+          when 'FLD' then 'Field Studies'
+          when 'LAB' then 'Lab'
+          when 'LEC' then 'Lecture'
+          when 'ORL' then 'Oral Conversation'
+          when 'PRA' then 'Practicum'
+          when 'PRJ' then 'Project'
+          when 'RDG' then 'Reading'
+          when 'SEM' then 'Seminar'
+          when 'STU' then 'Studio'
+          when 'TLC' then 'Test Slot - Lecture'
+          when 'TST' then 'Test Slot'
+          when 'TUT' then 'Tutorial'
+          when 'WRK' then 'Work Term'
+          when 'WSP' then 'Workshop'
+          else 'Meeting'
       )
 
       for day of days
@@ -68,10 +91,11 @@ module.exports = (app) ->
         d.dayOfWeek is new Date().getDay()
       ))
 
-      hasClasses = classes.length > 0
       day.hasClasses = day.classes?.length > 0
+
       roomComps = req.params.room.match(/([A-Z]*)([0-9]*)/)
       day.room = "#{roomComps[1]} #{roomComps[2]}"
+
       res.render('room', day)
     )
   )
