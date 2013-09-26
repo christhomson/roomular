@@ -17,7 +17,7 @@ namespace :vlad do
 
   namespace :node do
     remote_task :install do
-      run "npm install"
+      run "cd #{latest_release}; npm install"
     end
   end
 
