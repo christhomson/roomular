@@ -1,18 +1,48 @@
-{{#hasClasses}}
-  <ul id="days">
-  	{{#each days}}
-    <li class="day">
-  	  <h2>{{dayName}}</h2>
-  	  <ul class="classes">
-  	  {{#each classes}}
-  	    <li class="{{DeptAcronym}}{{Number}}">
-          <h3>{{DeptAcronym}} {{Number}}</h3>
-          <h4>{{Title}}</h4>
-        </li>
-  	  {{/each}}
-  	  </ul>
-  	{{/each}}
-  </ul>
-{{else}}
-	<h2>Room has no classes.</h2>
-{{/hasClasses}}
+<div id="room-view">
+  <div class="header">
+    Roomular
+    <form method="GET" action="/rooms">
+      <input type="text" class="form-control input-lg" placeholder="MC 2054" id="room" name="room">
+      <input type="submit" value="Find schedule &rarr;" />
+    </form>
+  </div>
+
+  {{#hasClasses}}
+    <ul id="days">
+      <li id="times">
+        <ul>
+          <li>8:00 am</li>
+          <li>9:00 am</li>
+          <li>10:00 am</li>
+          <li>11:00 am</li>
+          <li>12:00 pm</li>
+          <li>1:00 pm</li>
+          <li>2:00 pm</li>
+          <li>3:00 pm</li>
+          <li>4:00 pm</li>
+          <li>5:00 pm</li>
+          <li>6:00 pm</li>
+          <li>7:00 pm</li>
+          <li>8:00 pm</li>
+          <li>9:00 pm</li>
+          <li>10:00 pm</li>
+        </ul>
+      </li>
+
+    	{{#each days}}
+      <li class="day">
+    	  <h2>{{dayName}}</h2>
+    	  <ul class="classes">
+    	  {{#each classes}}
+    	    <li class="{{DeptAcronym}}{{Number}}" data-half-hours="{{halfHours}}">
+            <h3>{{DeptAcronym}} {{Number}}</h3>
+            <h4>{{Title}}</h4>
+          </li>
+    	  {{/each}}
+    	  </ul>
+    	{{/each}}
+    </ul>
+  {{else}}
+  	<h2>Room has no classes.</h2>
+  {{/hasClasses}}
+</div>

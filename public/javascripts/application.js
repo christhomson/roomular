@@ -16,5 +16,10 @@ $(document).ready(function() {
     $("." + className).css({'background': colorForClass(className)});
   });
 
+  $(".classes li").each(function(i, e) {
+    paddingPercent = (3.57 * $(e).data('half-hours')) + '%'
+    $(e).css({'padding-top': paddingPercent, 'padding-bottom': paddingPercent});
+  });
+
   $("input#room").focus();
 });

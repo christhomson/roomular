@@ -46,6 +46,14 @@ module.exports = (app) ->
       classes = classes.sort (a, b) ->
         parseInt(a.StartTime.split(':')[0], 10) - parseInt(b.StartTime.split(':')[0], 10)
 
+      _.each(classes, (c) ->
+        startTime = c.StartTime.split(':')
+        endTime = c.EndTime.split(':')
+        hours = endTime[0] - startTime[0]
+        minutes = endTime[1] - startTime[1]
+        c.halfHours = (hours * 2) + (Math.ceil(minutes / 30.0))
+      )
+
       for day of days
         days[day].classes = _.filter(classes, (clas) ->
           clas.Days.match(days[day].regex)?
