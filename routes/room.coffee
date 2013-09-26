@@ -92,9 +92,7 @@ module.exports = (app) ->
       ))
 
       day.hasClasses = day.classes?.length > 0
-
-      roomComps = req.params.room.match(/([A-Z]*)([0-9]*)/)
-      day.room = "#{roomComps[1]} #{roomComps[2]}"
+      day.room = req.params.room
 
       res.render('room', day)
     )
