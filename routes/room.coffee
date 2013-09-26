@@ -52,6 +52,6 @@ module.exports = (app) ->
         )
 
       hasClasses = classes.length > 0
-      res.render('room', { days: days, hasClasses: hasClasses})
+      res.render('room', { layout: 'minimal', days: days, hasClasses: hasClasses})
     )
   )
