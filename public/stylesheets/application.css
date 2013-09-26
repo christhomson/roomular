@@ -4,57 +4,24 @@ body {
   font-size: 16px;
 }
 
-#room-view form {
-  display: inline;
+ul {
+  list-style-type: none;
 }
 
-#room-view .header {
-  padding: 0.75%;
+ul.classes li {
+  padding: 15px;
+}
+
+h3 {
+  font-size: 115%;
+  margin: 0;
+}
+
+.time {
+  float: right;
 }
 
 #find_button {
   float: right;
   margin-top: 10px;
-}
-
-h1 a, h1 a:hover, h1 a:visited {
-  color: black;
-  text-decoration: none;
-}
-
-ul {
-  list-style-type: none;
-}
-
-#days > li {
-  float: left;
-  display: inline;
-  width: 18.4%;
-  text-align: center;
-}
-
-#days > li h2 {
-  background: black;
-  color: white;
-}
-
-#days > li#times {
-  width: 8%;
-}
-
-h2 {
-  font-size: 200%;
-}
-
-h3 {
-  font-size: 150%;
-}
-
-h4 {
-  font-size: 100%;
-}
-
-.classes li {
-  padding: 0% 5% 0% 5%;
-  text-align: center;
 }

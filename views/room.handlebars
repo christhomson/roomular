@@ -1,48 +1,18 @@
-<div id="room-view">
-  <div class="header">
-    Roomular
-    <form method="GET" action="/rooms">
-      <input type="text" class="form-control input-lg" placeholder="MC 2054" id="room" name="room">
-      <input type="submit" value="Find schedule &rarr;" />
-    </form>
-  </div>
+<form method="GET" action="/rooms">
+  <input type="text" class="form-control input-lg" placeholder="{{room}}" id="room" name="room">
+  <button type="button" class="btn btn-primary" id="find_button">Find schedule <span class="glyphicon glyphicon-chevron-right"></span></button>
+</form>
 
-  {{#hasClasses}}
-    <ul id="days">
-      <li id="times">
-        <ul>
-          <li>8:00 am</li>
-          <li>9:00 am</li>
-          <li>10:00 am</li>
-          <li>11:00 am</li>
-          <li>12:00 pm</li>
-          <li>1:00 pm</li>
-          <li>2:00 pm</li>
-          <li>3:00 pm</li>
-          <li>4:00 pm</li>
-          <li>5:00 pm</li>
-          <li>6:00 pm</li>
-          <li>7:00 pm</li>
-          <li>8:00 pm</li>
-          <li>9:00 pm</li>
-          <li>10:00 pm</li>
-        </ul>
-      </li>
-
-    	{{#each days}}
-      <li class="day">
-    	  <h2>{{dayName}}</h2>
-    	  <ul class="classes">
-    	  {{#each classes}}
-    	    <li class="{{DeptAcronym}}{{Number}}" data-half-hours="{{halfHours}}">
-            <h3>{{DeptAcronym}} {{Number}}</h3>
-            <h4>{{Title}}</h4>
-          </li>
-    	  {{/each}}
-    	  </ul>
-    	{{/each}}
-    </ul>
-  {{else}}
-  	<h2>Room has no classes.</h2>
-  {{/hasClasses}}
-</div>
+{{#hasClasses}}
+  <h2>{{dayName}} in {{room}}</h2>
+  <ul class="classes">
+  {{#each classes}}
+    <li class="{{DeptAcronym}}{{Number}}" data-half-hours="{{halfHours}}">
+      <span class="time">{{StartTime}} - {{EndTime}}</span>
+      <h3>{{DeptAcronym}} {{Number}} &middot; {{Title}}</h3>
+    </li>
+  {{/each}}
+  </ul>
+{{else}}
+	<h2>There are no classes in {{room}} on {{dayName}}.</h2>
+{{/hasClasses}}

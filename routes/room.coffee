@@ -6,26 +6,31 @@ _ = require('underscore')
 module.exports = (app) ->
   days = {
     "M": {
+      dayOfWeek: 1
       dayName: "Monday"
       classes: []
       regex: /M/
     },
     "T": {
+      dayOfWeek: 2
       dayName: "Tuesday"
       classes: []
       regex: /(T$|T[^h])/
     },
     "W": {
+      dayOfWeek: 3
       dayName: "Wednesday"
       classes: []
       regex: /W/
     },
     "Th": {
+      dayOfWeek: 4
       dayName: "Thursday"
       classes: []
       regex: /Th/
     },
     "F": {
+      dayOfWeek: 5
       dayName: "Friday"
       classes: []
       regex: /F/
@@ -59,7 +64,14 @@ module.exports = (app) ->
           clas.Days.match(days[day].regex)?
         )
 
+      day = _.first(_.filter(days, (d) ->
+        d.dayOfWeek is new Date().getDay()
+      ))
+
       hasClasses = classes.length > 0
-      res.render('room', { layout: 'minimal', days: days, hasClasses: hasClasses})
+      day.hasClasses = day.classes?.length > 0
+      roomComps = req.params.room.match(/([A-Z]*)([0-9]*)/)
+      day.room = "#{roomComps[1]} #{roomComps[2]}"
+      res.render('room', day)
     )
   )
