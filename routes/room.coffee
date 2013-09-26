@@ -32,9 +32,16 @@ module.exports = (app) ->
     }
   }
 
-  app.get('/room_schedule', (req, res) =>
+  app.get('/rooms', (req, res) ->
+    if req.query.room
+      res.redirect '/rooms/' + req.query.room.toUpperCase().replace(' ', '')
+    else
+      res.redirect '/'
+  )
+
+  app.get('/rooms/:room', (req, res) =>
     api = new UWapi(nconf.get('uwaterloo_api_key'))
-    api.getCourseFromRoom(req.query.room, (err, classes) =>
+    api.getCourseFromRoom(req.params.room, (err, classes) =>
 
       classes = classes.sort (a, b) ->
         parseInt(a.StartTime.split(':')[0], 10) - parseInt(b.StartTime.split(':')[0], 10)
@@ -45,6 +52,6 @@ module.exports = (app) ->
         )
 
       hasClasses = classes.length > 0
-      res.render('room_schedule', { days: days, hasClasses: hasClasses})
+      res.render('room', { days: days, hasClasses: hasClasses})
     )
   )

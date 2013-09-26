@@ -10,7 +10,7 @@ exphbs  = require('express3-handlebars')
 @app.use(express.static(__dirname + '/public'));
 
 @routes = {
-  room_schedule: require('./routes/room_schedule')(@app)
+  room: require('./routes/room')(@app)
   index: require('./routes/index')(@app)
 }
 
