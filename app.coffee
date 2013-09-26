@@ -1,6 +1,6 @@
 express = require('express')
 nconf = require('nconf')
-nconf.argv().env().file({ file: 'local.json' });
+nconf.argv().env().file({ file: 'config/local.json' });
 exphbs  = require('express3-handlebars')
 
 @app = express()

@@ -1,5 +1,5 @@
 node_modules
 tmp/
 log/
-local.json
+config/local.json
 *.pid

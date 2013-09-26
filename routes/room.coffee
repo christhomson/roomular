@@ -1,6 +1,6 @@
 UWapi = require('../lib/api')
 nconf = require('nconf')
-nconf.argv().env().file({ file: 'local.json' });
+nconf.argv().env().file({ file: 'config/local.json' });
 _ = require('underscore')
 
 module.exports = (app) ->
