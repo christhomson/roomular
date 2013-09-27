@@ -9,9 +9,6 @@ ul {
   padding: 0;
 }
 
-ul.classes li {
-  padding: 15px;
-}
 
 h3 {
   font-size: 115%;
@@ -25,4 +22,114 @@ h3 {
 #find_button {
   float: right;
   margin-top: 10px;
+}
+
+
+/* adjust sizing for timeslots */
+.classes li, .half-hours-1, .half-hours-2 {
+  padding: 2%;
+}
+
+.half-hours-3 {
+  padding: 4% 2% 4% 2% !important;
+}
+
+.half-hours-4 {
+  padding: 6% 2% 6% 2% !important;
+}
+
+.half-hours-5 {
+  padding: 8% 2% 8% 2% !important;
+}
+
+.half-hours-6 {
+  padding: 10% 2% 10% 2% !important;
+}
+
+.half-hours-7 {
+  padding: 12% 2% 12% 2% !important;
+}
+
+.half-hours-8 {
+  padding: 14% 2% 14% 2% !important;
+}
+
+.half-hours-9 {
+  padding: 16% 2% 16% 2% !important;
+}
+
+.half-hours-10 {
+  padding: 18% 2% 18% 2% !important;
+}
+
+.half-hours-11 {
+  padding: 20% 2% 20% 2% !important;
+}
+
+.half-hours-12 {
+  padding: 22% 2% 22% 2% !important;
+}
+
+.half-hours-13 {
+  padding: 24% 2% 24% 2% !important;
+}
+
+.half-hours-14 {
+  padding: 26% 2% 26% 2% !important;
+}
+
+.half-hours-15 {
+  padding: 28% 2% 28% 2% !important;
+}
+
+.half-hours-16 {
+  padding: 30% 2% 30% 2% !important;
+}
+
+.half-hours-17 {
+  padding: 32% 2% 32% 2% !important;
+}
+
+.half-hours-18 {
+  padding: 34% 2% 34% 2% !important;
+}
+
+.half-hours-19 {
+  padding: 36% 2% 36% 2% !important;
+}
+
+.half-hours-20 {
+  padding: 38% 2% 38% 2% !important;
+}
+
+.half-hours-21 {
+  padding: 40% 2% 40% 2% !important;
+}
+
+.half-hours-22 {
+  padding: 42% 2% 42% 2% !important;
+}
+
+.half-hours-23 {
+  padding: 44% 2% 44% 2% !important;
+}
+
+.half-hours-24 {
+  padding: 46% 2% 46% 2% !important;
+}
+
+.half-hours-25 {
+  padding: 48% 2% 48% 2% !important;
+}
+
+.half-hours-26 {
+  padding: 50% 2% 50% 2% !important;
+}
+
+.half-hours-27 {
+  padding: 52% 2% 52% 2% !important;
+}
+
+.half-hours-28 {
+  padding: 54% 2% 54% 2% !important;
 }

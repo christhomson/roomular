@@ -4,7 +4,7 @@ $(document).ready(function() {
   });
 
   var classClassNames = $.unique($(".classes li").map(function(i, e) {
-    return $(e).attr('class');
+    return $(e).attr('class').split(' ')[0];
   }));
 
   var colorForClass = function(className) {
