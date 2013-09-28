@@ -14,4 +14,6 @@ exphbs  = require('express3-handlebars')
   index: require('./routes/index')(@app)
 }
 
-@app.listen(process.env.PORT || nconf.get('server').port)
+port = process.env.PORT || nconf.get('server').port
+@app.listen(port)
+console.log("Roomular started on port #{port}.")
