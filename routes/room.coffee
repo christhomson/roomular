@@ -34,6 +34,18 @@ module.exports = (app) ->
       dayName: "Friday"
       classes: []
       regex: /F/
+    },
+    "S": {
+      dayOfWeek: 6
+      dayName: "Saturday"
+      classes: []
+      regex: /Saturday/ # should never happen
+    },
+    "Su": {
+      dayOfWeek: 7
+      dayName: "Sunday"
+      classes: []
+      regex: /Sunday/ # should never happen
     }
   }
 
