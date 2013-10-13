@@ -5,7 +5,7 @@ set :repository, "git@github.com:christhomson/roomular.git"
 set :user, "deploy"
 set :domain, "#{user}@roomular.cthomson.ca"
 set :deploy_to, "/home/deploy/apps/roomular"
-set :revision, "origin/feature/single_page"
+set :revision, "origin/master"
 
 # On the server side, the upstart scripts (config/upstart) should be installed to /etc/init.
 # We also need to allow the "[start|stop|restart] [thin|resque]" commands with no password for this user.
