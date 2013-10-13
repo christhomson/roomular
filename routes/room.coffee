@@ -70,7 +70,7 @@ module.exports = (app) ->
   app.get('/rooms/:room/:day?*', (req, res) =>
     api = new UWapi(nconf.get('uwaterloo_api_key'))
 
-    dayRequested = switch(req.params.day.toLowerCase())
+    dayRequested = switch(req.params.day?.toLowerCase())
       when 'monday',    'm'  then 1
       when 'tuesday',   't'  then 2
       when 'wednesday', 'w'  then 3
