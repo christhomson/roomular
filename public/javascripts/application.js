@@ -18,5 +18,14 @@ $(document).ready(function() {
     }
   });
 
+
+  if ($(".classes li h3 a").size() > 0) {
+    mixpanel.track_links(".classes li h3 a", "Clicked course link", function(e) {
+      return {
+        course: $(e).closest("a").text()
+      }
+    });
+  }
+
   $("input#room").focus();
 });

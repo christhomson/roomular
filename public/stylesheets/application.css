@@ -55,6 +55,15 @@ h3 {
   float: left;
 }
 
+.classes a, a:visited {
+  color: #333;
+}
+
+.classes a:hover {
+  color: #464646;
+  text-decoration: none;
+}
+
 /* adjust sizing for timeslots */
 .classes li, .half-hours-1, .half-hours-2 {
   padding: 2%;
