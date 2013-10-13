@@ -131,7 +131,7 @@ module.exports = (app) ->
           days[day].classes.push(gapClassForTimeframe(lastEndTime, [22, 0]))
 
       day = _.first(_.filter(days, (d) ->
-        d.dayOfWeek is new Date().getDay()
+        d.dayOfWeek is 2
       ))
 
       day.hasClasses = day.classes?.length > 0
