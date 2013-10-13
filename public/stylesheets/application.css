@@ -24,6 +24,10 @@ h3 {
   margin-top: 10px;
 }
 
+.classes li.gap {
+  background-color: rgba(211, 211, 211, 0.33);
+}
+
 
 /* adjust sizing for timeslots */
 .classes li, .half-hours-1, .half-hours-2 {

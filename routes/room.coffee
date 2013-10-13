@@ -49,6 +49,20 @@ module.exports = (app) ->
     }
   }
 
+  gapClassForTimeframe = (startTime, endTime) ->
+    startTime[1] = if startTime[1] < 9 then "#{startTime[1]}0" else startTime[1]
+    endTime[1] = if endTime[1] < 9 then "#{endTime[1]}0" else endTime[1]
+
+    {
+      StartTime: startTime.join(':')
+      EndTime: endTime.join(':')
+      halfHours: (endTime[0] - startTime[0]) * 2 + (Math.ceil((endTime[1] - startTime[1]) / 30.0))
+      isGap: true
+    }
+
+  calculateTimeDifference = (startTime, endTime) ->
+    (endTime[0] - startTime[0]) * 60 + (endTime[1] - startTime[1])
+
   app.get('/rooms', (req, res) ->
     if req.query.room
       res.redirect '/rooms/' + req.query.room.toUpperCase().replace(' ', '')
@@ -98,6 +112,23 @@ module.exports = (app) ->
         days[day].classes = _.filter(classes, (clas) ->
           clas.Days.match(days[day].regex)?
         )
+
+        # Add in gaps.
+        previousEndTime = [8, 30]
+        _.each(days[day].classes, (clas, i) ->
+          startTime = _.map(clas.StartTime.split(':'), (digit) -> parseInt(digit, 10))
+
+          if calculateTimeDifference(previousEndTime, startTime) > 10
+            days[day].classes.splice(i, 0, gapClassForTimeframe(previousEndTime, startTime))
+
+          previousEndTime = _.map(clas.EndTime.split(':'), (digit) -> parseInt(digit, 10))
+        )
+
+        lastClass = days[day].classes[days[day].classes.length - 1]
+        lastEndTime = lastClass?.EndTime.split(':').map (digit) -> parseInt(digit, 10)
+
+        if lastClass and calculateTimeDifference(lastEndTime, [22, 0]) > 10
+          days[day].classes.push(gapClassForTimeframe(lastEndTime, [22, 0]))
 
       day = _.first(_.filter(days, (d) ->
         d.dayOfWeek is new Date().getDay()

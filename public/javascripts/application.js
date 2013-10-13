@@ -13,7 +13,9 @@ $(document).ready(function() {
 
   classClassNames.each(function(i) {
     var className = classClassNames[i];
-    $("." + className).css({'background': colorForClass(className)});
+    if (className !== 'gap') {
+      $("." + className).css({'background': colorForClass(className)});
+    }
   });
 
   $("input#room").focus();
