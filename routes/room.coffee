@@ -120,6 +120,8 @@ module.exports = (app) ->
           clas.Days.match(days[day].regex)?
         )
 
+        days[day].numberOfGaps = 0
+
         # Add in gaps.
         previousEndTime = [8, 30]
         _.each(days[day].classes, (clas, i) ->
@@ -127,6 +129,7 @@ module.exports = (app) ->
 
           if calculateTimeDifference(previousEndTime, startTime) > 10
             days[day].classes.splice(i, 0, gapClassForTimeframe(previousEndTime, startTime))
+            days[day].numberOfGaps++
 
           previousEndTime = _.map(clas.EndTime.split(':'), (digit) -> parseInt(digit, 10))
         )
@@ -136,11 +139,15 @@ module.exports = (app) ->
 
         if lastClass and calculateTimeDifference(lastEndTime, [22, 0]) > 10
           days[day].classes.push(gapClassForTimeframe(lastEndTime, [22, 0]))
+          days[day].numberOfGaps++
 
       day = _.first(_.filter(days, (d) ->
         d.dayOfWeek is dayRequested
       ))
 
+      day.isToday = (new Date().getDay() is dayRequested) + ""
+
+      day.numberOfClasses = day.classes.length - day.numberOfGaps
       day.hasClasses = day.classes?.length > 0
       day.room = req.params.room
 

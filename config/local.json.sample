@@ -2,5 +2,6 @@
   "server": {
     "port": 8080
   },
-  "uwaterloo_api_key": "Get this from http://api.uwaterloo.ca/#!/keygen"
+  "uwaterloo_api_key": "Get this from http://api.uwaterloo.ca/#!/keygen",
+  "mixpanel_token": "This is included at the end of the JS Mixpanel gives you."
 }

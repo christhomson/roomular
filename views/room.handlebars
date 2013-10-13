@@ -30,3 +30,17 @@
   <a href="/rooms/{{room}}/{{downcase lastWeekDay}}" class="previous"><span class="glyphicon glyphicon-chevron-left"></span> {{lastWeekDay}}</a>
   <a href="/rooms/{{room}}/{{downcase nextWeekDay}}" class="next">{{nextWeekDay}} <span class="glyphicon glyphicon-chevron-right"></span></a>
 </div>
+
+<script type="text/javascript">
+  mixpanel.track(
+    "Viewed Room Schedule",
+    {
+      'Building and Room': '{{friendlyRoomName room}}',
+      'Building': '{{buildingName room}}',
+      'Room Number': '{{roomNumber room}}',
+      'Day of Week': '{{dayName}}',
+      'Today?': '{{isToday}}',
+      '# of Classes': {{numberOfClasses}},
+      '# of Gaps': {{numberOfGaps}}
+    });
+</script>

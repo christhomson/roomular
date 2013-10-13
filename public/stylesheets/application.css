@@ -45,6 +45,15 @@ h3 {
   color: #4098E2;
 }
 
+#mixpanel {
+  float: right;
+  vertical-align: middle;
+  margin: 13px 0;
+}
+
+.text-muted {
+  float: left;
+}
 
 /* adjust sizing for timeslots */
 .classes li, .half-hours-1, .half-hours-2 {
