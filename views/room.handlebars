@@ -4,7 +4,7 @@
 </form>
 
 {{#hasClasses}}
-  <h2>{{dayName}} in {{room}}</h2>
+  <h2>{{dayName}} in {{friendlyRoomName room}}</h2>
   <ul class="classes">
   {{#each classes}}
     {{#if isGap}}
@@ -23,7 +23,7 @@
   {{/each}}
   </ul>
 {{else}}
-	<h2>There are no classes in {{room}} on {{dayName}}.</h2>
+	<h2>There are no classes in {{friendlyRoomName room}} on {{dayName}}.</h2>
 {{/hasClasses}}
 
 <div id="time-traveler">

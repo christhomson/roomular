@@ -9,6 +9,14 @@ exphbs  = require('express3-handlebars')
   defaultLayout: 'main'
   helpers: {
     downcase: (str) -> str.toLowerCase()
+    friendlyRoomName: (roomName) ->
+      components = roomName.match(/([A-Z]*)([0-9]*)/)
+
+      if components[1].length is 1 or components[1] is 'EV'
+        components[1] = components[1] + components[2][0]
+        components[2] = components[2].substring(1)
+
+      "#{components[1]} #{components[2]}"
   }
 }))
 
