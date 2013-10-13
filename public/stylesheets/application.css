@@ -28,6 +28,23 @@ h3 {
   background-color: rgba(211, 211, 211, 0.33);
 }
 
+.next {
+  float: right;
+}
+
+.previous {
+  float: left;
+}
+
+#time-traveler a, a:visited {
+  color: #5385af;
+  text-decoration: none;
+}
+
+#time-traveler a:hover {
+  color: #4098E2;
+}
+
 
 /* adjust sizing for timeslots */
 .classes li, .half-hours-1, .half-hours-2 {

@@ -25,3 +25,8 @@
 {{else}}
 	<h2>There are no classes in {{room}} on {{dayName}}.</h2>
 {{/hasClasses}}
+
+<div id="time-traveler">
+  <a href="/rooms/{{room}}/{{downcase lastWeekDay}}" class="previous"><span class="glyphicon glyphicon-chevron-left"></span> {{lastWeekDay}}</a>
+  <a href="/rooms/{{room}}/{{downcase nextWeekDay}}" class="next">{{nextWeekDay}} <span class="glyphicon glyphicon-chevron-right"></span></a>
+</div>

@@ -34,18 +34,6 @@ module.exports = (app) ->
       dayName: "Friday"
       classes: []
       regex: /F/
-    },
-    "S": {
-      dayOfWeek: 6
-      dayName: "Saturday"
-      classes: []
-      regex: /Saturday/ # should never happen
-    },
-    "Su": {
-      dayOfWeek: 7
-      dayName: "Sunday"
-      classes: []
-      regex: /Sunday/ # should never happen
     }
   }
 
@@ -63,6 +51,15 @@ module.exports = (app) ->
   calculateTimeDifference = (startTime, endTime) ->
     (endTime[0] - startTime[0]) * 60 + (endTime[1] - startTime[1])
 
+  getNextWeekDayName = (today) ->
+    nextWeekDay = if today > 4 then 1 else today + 1
+    day = _.findWhere(days, {dayOfWeek: nextWeekDay}).dayName
+
+  getLastWeekDayName = (today) ->
+    lastWeekDay = if today is 1 then 5 else today - 1
+    _.findWhere(days, {dayOfWeek: lastWeekDay}).dayName
+
+
   app.get('/rooms', (req, res) ->
     if req.query.room
       res.redirect '/rooms/' + req.query.room.toUpperCase().replace(' ', '')
@@ -70,8 +67,18 @@ module.exports = (app) ->
       res.redirect '/'
   )
 
-  app.get('/rooms/:room', (req, res) =>
+  app.get('/rooms/:room/:day?', (req, res) =>
     api = new UWapi(nconf.get('uwaterloo_api_key'))
+
+    dayRequested = switch(req.params.day)
+      when 'monday'    then 1
+      when 'tuesday'   then 2
+      when 'wednesday' then 3
+      when 'thursday'  then 4
+      when 'friday'    then 5
+      else new Date().getDay()
+    dayRequested = 1 if dayRequested is 0 or dayRequested > 5
+
     api.getCourseFromRoom(req.params.room, (err, classes) =>
 
       classes = classes.sort (a, b) ->
@@ -131,11 +138,14 @@ module.exports = (app) ->
           days[day].classes.push(gapClassForTimeframe(lastEndTime, [22, 0]))
 
       day = _.first(_.filter(days, (d) ->
-        d.dayOfWeek is 2
+        d.dayOfWeek is dayRequested
       ))
 
       day.hasClasses = day.classes?.length > 0
       day.room = req.params.room
+
+      day.nextWeekDay = getNextWeekDayName(day.dayOfWeek)
+      day.lastWeekDay = getLastWeekDayName(day.dayOfWeek)
 
       res.render('room', day)
     )

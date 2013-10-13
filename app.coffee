@@ -5,7 +5,13 @@ exphbs  = require('express3-handlebars')
 
 @app = express()
 
-@app.engine('handlebars', exphbs({defaultLayout: 'main'}))
+@app.engine('handlebars', exphbs({
+  defaultLayout: 'main'
+  helpers: {
+    downcase: (str) -> str.toLowerCase()
+  }
+}))
+
 @app.set('view engine', 'handlebars')
 @app.use(express.static(__dirname + '/public'));
 
