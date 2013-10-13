@@ -67,15 +67,15 @@ module.exports = (app) ->
       res.redirect '/'
   )
 
-  app.get('/rooms/:room/:day?', (req, res) =>
+  app.get('/rooms/:room/:day?*', (req, res) =>
     api = new UWapi(nconf.get('uwaterloo_api_key'))
 
-    dayRequested = switch(req.params.day)
-      when 'monday'    then 1
-      when 'tuesday'   then 2
-      when 'wednesday' then 3
-      when 'thursday'  then 4
-      when 'friday'    then 5
+    dayRequested = switch(req.params.day.toLowerCase())
+      when 'monday',    'm'  then 1
+      when 'tuesday',   't'  then 2
+      when 'wednesday', 'w'  then 3
+      when 'thursday',  'th' then 4
+      when 'friday',    'f'  then 5
       else new Date().getDay()
     dayRequested = 1 if dayRequested is 0 or dayRequested > 5
 
