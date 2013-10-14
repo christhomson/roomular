@@ -64,6 +64,11 @@ h3 {
   text-decoration: none;
 }
 
+.push-down {
+  clear: both;
+  margin-top: 65px;
+}
+
 /* adjust sizing for timeslots */
 .classes li, .half-hours-1, .half-hours-2 {
   padding: 2%;
