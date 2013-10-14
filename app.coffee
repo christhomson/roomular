@@ -2,7 +2,9 @@ express = require('express')
 nconf = require('nconf')
 nconf.argv().env().file({ file: 'config/local.json' });
 exphbs  = require('express3-handlebars')
+redis = require('redis')
 
+process.redis = redis.createClient() # assumes localhost:6379
 @app = express()
 
 

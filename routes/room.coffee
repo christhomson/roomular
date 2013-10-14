@@ -37,6 +37,8 @@ module.exports = (app) ->
     }
   }
 
+  LATEST_ROOMS = "roomular:rooms:latest"
+
   gapClassForTimeframe = (startTime, endTime) ->
     startTime[1] = if startTime[1] < 9 then "#{startTime[1]}0" else startTime[1]
     endTime[1] = if endTime[1] < 9 then "#{endTime[1]}0" else endTime[1]
@@ -67,6 +69,7 @@ module.exports = (app) ->
       res.redirect '/'
   )
 
+  # TODO - this code needs some serious refactoring
   app.get('/rooms/:room/:day?*', (req, res) =>
     api = new UWapi(nconf.get('uwaterloo_api_key'))
 
@@ -148,11 +151,16 @@ module.exports = (app) ->
       day.isToday = (new Date().getDay() is dayRequested) + ""
 
       day.numberOfClasses = day.classes.length - day.numberOfGaps
-      day.hasClasses = day.classes?.length > 0
+      day.hasClasses = day.numberOfClasses > 0
+
       day.room = req.params.room
 
       day.nextWeekDay = getNextWeekDayName(day.dayOfWeek)
       day.lastWeekDay = getLastWeekDayName(day.dayOfWeek)
+
+      if day.hasClasses
+        process.redis.lpush LATEST_ROOMS, day.room, ->
+          process.redis.ltrim LATEST_ROOMS, 0, 9
 
       res.render('room', day)
     )

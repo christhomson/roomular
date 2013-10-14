@@ -4,6 +4,13 @@
   <button type="button" class="btn btn-primary" id="find_button">Find schedule <span class="glyphicon glyphicon-chevron-right"></span></button>
 </form>
 
+<h3>Recent Rooms</h3>
+<ul id="recent-rooms">
+  {{#each recentRooms}}
+    <li><a href="/rooms/{{this}}">{{friendlyRoomName this}}</a></li>
+  {{/each}}
+</ul>
+
 <script type="text/javascript">
   mixpanel.track("Viewed Homepage");
 </script>
