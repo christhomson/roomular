@@ -42,8 +42,8 @@ module.exports = (app) ->
     endTime[1] = if endTime[1] < 9 then "#{endTime[1]}0" else endTime[1]
 
     {
-      StartTime: startTime.join(':')
-      EndTime: endTime.join(':')
+      start_time: startTime.join(':')
+      end_time: endTime.join(':')
       halfHours: (endTime[0] - startTime[0]) * 2 + (Math.ceil((endTime[1] - startTime[1]) / 30.0))
       isGap: true
     }
@@ -62,12 +62,25 @@ module.exports = (app) ->
 
   app.get('/rooms', (req, res) ->
     if req.query.room
-      res.redirect '/rooms/' + req.query.room.toUpperCase().replace(' ', '')
+      # Split into building and room.
+      req.query.room = req.query.room.split(/\s/).join('')
+      roomParts = req.query.room.match(/([A-Za-z]*)([0-9]*)/)
+      building = roomParts[1]
+      room = roomParts[2]
+
+      if building.length is 1 or building.toUpperCase() is 'EV'
+        building += room[0]
+        room = room.substring(1)
+
+      if building and room
+        res.redirect "/rooms/#{building}/#{room}"
+      else
+        res.redirect '/'
     else
       res.redirect '/'
   )
 
-  app.get('/rooms/:room/:day?*', (req, res) =>
+  app.get('/rooms/:building/:room/:day?*', (req, res) =>
     api = new UWapi(nconf.get('uwaterloo_api_key'))
 
     dayRequested = switch(req.params.day?.toLowerCase())
@@ -79,21 +92,20 @@ module.exports = (app) ->
       else new Date().getDay()
     dayRequested = 1 if dayRequested is 0 or dayRequested > 5
 
-    api.getCourseFromRoom(req.params.room, (err, classes) =>
-
+    api.getCourseFromRoom(req.params.building, req.params.room, (err, classes) =>
       classes = classes.sort (a, b) ->
-        parseInt(a.StartTime.split(':')[0], 10) - parseInt(b.StartTime.split(':')[0], 10)
+        parseInt(a.start_time.split(':')[0], 10) - parseInt(b.start_time.split(':')[0], 10)
 
       _.each(classes, (c) ->
-        startTime = c.StartTime.split(':')
-        endTime = c.EndTime.split(':')
+        startTime = c.start_time.split(':')
+        endTime = c.end_time.split(':')
         hours = endTime[0] - startTime[0]
         minutes = endTime[1] - startTime[1]
         c.halfHours = (hours * 2) + (Math.ceil(minutes / 30.0))
-        c.Instructor = c.Instructor.split(',').reverse().join(' ') || "Unknown Instructor"
+        c.instructor = c.instructors?[0]?.split(',')?.reverse()?.join(' ') || "Unknown Instructor"
 
         # See https://uwaterloo.ca/quest/undergraduate-students/glossary-of-terms.
-        c.classType = switch(c.Section.split(' ')[0])
+        c.classType = switch(c.section.split(' ')[0])
           when 'CLN' then 'Clinic'
           when 'DIS' then 'Discussion'
           when 'ENS' then 'Ensemble'
@@ -117,7 +129,7 @@ module.exports = (app) ->
 
       for day of days
         days[day].classes = _.filter(classes, (clas) ->
-          clas.Days.match(days[day].regex)?
+          clas.weekdays.match(days[day].regex)?
         )
 
         days[day].numberOfGaps = 0
@@ -125,17 +137,17 @@ module.exports = (app) ->
         # Add in gaps.
         previousEndTime = [8, 30]
         _.each(days[day].classes, (clas, i) ->
-          startTime = _.map(clas.StartTime.split(':'), (digit) -> parseInt(digit, 10))
+          startTime = _.map(clas.start_time.split(':'), (digit) -> parseInt(digit, 10))
 
           if calculateTimeDifference(previousEndTime, startTime) > 10
             days[day].classes.splice(i, 0, gapClassForTimeframe(previousEndTime, startTime))
             days[day].numberOfGaps++
 
-          previousEndTime = _.map(clas.EndTime.split(':'), (digit) -> parseInt(digit, 10))
+          previousEndTime = _.map(clas.end_time.split(':'), (digit) -> parseInt(digit, 10))
         )
 
         lastClass = days[day].classes[days[day].classes.length - 1]
-        lastEndTime = lastClass?.EndTime.split(':').map (digit) -> parseInt(digit, 10)
+        lastEndTime = lastClass?.end_time.split(':').map (digit) -> parseInt(digit, 10)
 
         if lastClass and calculateTimeDifference(lastEndTime, [22, 0]) > 10
           days[day].classes.push(gapClassForTimeframe(lastEndTime, [22, 0]))
@@ -149,6 +161,7 @@ module.exports = (app) ->
 
       day.numberOfClasses = day.classes.length - day.numberOfGaps
       day.hasClasses = day.classes?.length > 0
+      day.building = req.params.building
       day.room = req.params.room
 
       day.nextWeekDay = getNextWeekDayName(day.dayOfWeek)

@@ -10,31 +10,7 @@ exphbs  = require('express3-handlebars')
   defaultLayout: 'main'
   helpers: {
     downcase: (str) -> str.toLowerCase()
-    friendlyRoomName: (roomName) ->
-      components = roomName.match(/([A-Za-z]*)([0-9]*)/)
-
-      if components[1].length is 1 or components[1] is 'EV'
-        components[1] = components[1] + components[2][0]
-        components[2] = components[2].substring(1)
-
-      "#{components[1]} #{components[2]}"
-
-    buildingName: (roomName) ->
-      components = roomName.match(/([A-Za-z]*)([0-9]*)/)
-
-      if components[1].length is 1 or components[1] is 'EV'
-        components[1] + components[2][0]
-      else
-        components[1]
-
-    roomNumber: (roomName) ->
-      components = roomName.match(/([A-Za-z]*)([0-9]*)/)
-
-      if components[1].length is 1 or components[1] is 'EV'
-        components[2].substring(1)
-      else
-        components[2]
-
+    upcase: (str) -> str.toUpperCase()
     mixpanelToken: -> nconf.get('mixpanel_token')
   }
 }))
