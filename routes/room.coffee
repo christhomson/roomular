@@ -38,6 +38,9 @@ module.exports = (app) ->
   }
 
   gapClassForTimeframe = (startTime, endTime) ->
+    # Pad timestamps, if necessary, for consistency w/ API data
+    startTime[0] = if startTime[0] <= 9 then "0#{startTime[0]}" else startTime[0]
+    endTime[0] = if endTime[0] <= 9 then "0#{endTime[0]}" else endTime[0]
     startTime[1] = if startTime[1] < 9 then "#{startTime[1]}0" else startTime[1]
     endTime[1] = if endTime[1] < 9 then "#{endTime[1]}0" else endTime[1]
 
