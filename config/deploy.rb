@@ -8,7 +8,7 @@ set :deploy_to, "/home/deploy/apps/roomular"
 set :revision, "origin/master"
 
 # On the server side, the upstart scripts (config/upstart) should be installed to /etc/init.
-# We also need to allow the "[start|stop|restart] [thin|resque]" commands with no password for this user.
+# We also need to allow the "[start|stop|restart] roomular" commands with no password for this user.
 
 namespace :vlad do
   remote_task :symlink_config, :roles => :app do

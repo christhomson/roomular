@@ -5,36 +5,11 @@ _ = require('underscore')
 
 module.exports = (app) ->
   days = {
-    "M": {
-      dayOfWeek: 1
-      dayName: "Monday"
-      classes: []
-      regex: /M/
-    },
-    "T": {
-      dayOfWeek: 2
-      dayName: "Tuesday"
-      classes: []
-      regex: /(T$|T[^h])/
-    },
-    "W": {
-      dayOfWeek: 3
-      dayName: "Wednesday"
-      classes: []
-      regex: /W/
-    },
-    "Th": {
-      dayOfWeek: 4
-      dayName: "Thursday"
-      classes: []
-      regex: /Th/
-    },
-    "F": {
-      dayOfWeek: 5
-      dayName: "Friday"
-      classes: []
-      regex: /F/
-    }
+    "M": { index: 1, dayName: "Monday", classes: [], regex: /M/ }
+    "T": { index: 2, dayName: "Tuesday", classes: [], regex: /(T$|T[^h])/ }
+    "W": { index: 3, dayName: "Wednesday", classes: [], regex: /W/ }
+    "Th": { index: 4, dayName: "Thursday", classes: [], regex: /Th/ }
+    "F": { index: 5, dayName: "Friday", classes: [], regex: /F/ }
   }
 
   gapClassForTimeframe = (startTime, endTime) ->
@@ -56,12 +31,33 @@ module.exports = (app) ->
 
   getNextWeekDayName = (today) ->
     nextWeekDay = if today > 4 then 1 else today + 1
-    day = _.findWhere(days, {dayOfWeek: nextWeekDay}).dayName
+    day = _.findWhere(days, {index: nextWeekDay}).dayName
 
   getLastWeekDayName = (today) ->
     lastWeekDay = if today is 1 then 5 else today - 1
-    _.findWhere(days, {dayOfWeek: lastWeekDay}).dayName
+    _.findWhere(days, {index: lastWeekDay}).dayName
 
+  determineClassType = (clas) ->
+    switch(clas.section.split(' ')[0])
+      when 'CLN' then 'Clinic'
+      when 'DIS' then 'Discussion'
+      when 'ENS' then 'Ensemble'
+      when 'ESS' then 'Essay'
+      when 'FLD' then 'Field Studies'
+      when 'LAB' then 'Lab'
+      when 'LEC' then 'Lecture'
+      when 'ORL' then 'Oral Conversation'
+      when 'PRA' then 'Practicum'
+      when 'PRJ' then 'Project'
+      when 'RDG' then 'Reading'
+      when 'SEM' then 'Seminar'
+      when 'STU' then 'Studio'
+      when 'TLC' then 'Test Slot - Lecture'
+      when 'TST' then 'Test Slot'
+      when 'TUT' then 'Tutorial'
+      when 'WRK' then 'Work Term'
+      when 'WSP' then 'Workshop'
+      else 'Meeting'
 
   app.get('/rooms', (req, res) ->
     if req.query.room
@@ -83,16 +79,12 @@ module.exports = (app) ->
       res.redirect '/'
   )
 
+  # This function is in massive need of refactoring. It's so damn long.
   app.get('/rooms/:building/:room/:day?*', (req, res) =>
     api = new UWapi(nconf.get('uwaterloo_api_key'))
 
-    dayRequested = switch(req.params.day?.toLowerCase())
-      when 'monday',    'm'  then 1
-      when 'tuesday',   't'  then 2
-      when 'wednesday', 'w'  then 3
-      when 'thursday',  'th' then 4
-      when 'friday',    'f'  then 5
-      else new Date().getDay()
+    req.params.day = req.params.day?[0].toUpperCase() + req.params.day?.substring(1)
+    dayRequested = days[req.params.day]?.index || _.findWhere(days, {dayName: req.params.day})?.index || new Date().getDay()
     dayRequested = 1 if dayRequested is 0 or dayRequested > 5
 
     api.getCourseFromRoom(req.params.building, req.params.room, (err, classes) =>
@@ -108,26 +100,7 @@ module.exports = (app) ->
         c.instructor = c.instructors?[0]?.split(',')?.reverse()?.join(' ') || "Unknown Instructor"
 
         # See https://uwaterloo.ca/quest/undergraduate-students/glossary-of-terms.
-        c.classType = switch(c.section.split(' ')[0])
-          when 'CLN' then 'Clinic'
-          when 'DIS' then 'Discussion'
-          when 'ENS' then 'Ensemble'
-          when 'ESS' then 'Essay'
-          when 'FLD' then 'Field Studies'
-          when 'LAB' then 'Lab'
-          when 'LEC' then 'Lecture'
-          when 'ORL' then 'Oral Conversation'
-          when 'PRA' then 'Practicum'
-          when 'PRJ' then 'Project'
-          when 'RDG' then 'Reading'
-          when 'SEM' then 'Seminar'
-          when 'STU' then 'Studio'
-          when 'TLC' then 'Test Slot - Lecture'
-          when 'TST' then 'Test Slot'
-          when 'TUT' then 'Tutorial'
-          when 'WRK' then 'Work Term'
-          when 'WSP' then 'Workshop'
-          else 'Meeting'
+        c.classType = determineClassType(c)
       )
 
       for day of days
@@ -157,7 +130,7 @@ module.exports = (app) ->
           days[day].numberOfGaps++
 
       day = _.first(_.filter(days, (d) ->
-        d.dayOfWeek is dayRequested
+        d.index is dayRequested
       ))
 
       day.isToday = (new Date().getDay() is dayRequested) + ""
@@ -167,8 +140,8 @@ module.exports = (app) ->
       day.building = req.params.building
       day.room = req.params.room
 
-      day.nextWeekDay = getNextWeekDayName(day.dayOfWeek)
-      day.lastWeekDay = getLastWeekDayName(day.dayOfWeek)
+      day.nextWeekDay = getNextWeekDayName(day.index)
+      day.lastWeekDay = getLastWeekDayName(day.index)
 
       res.render('room', day)
     )

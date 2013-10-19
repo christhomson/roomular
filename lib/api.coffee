@@ -5,7 +5,7 @@ module.exports = class API
     @apiKey = apiKey
 
   getCourseFromRoom: (building, room, done) ->
-    apiURL = @apiURLForEndpoint("buildings/#{building}/#{room}/courses.json")
+    apiURL = @apiURLForEndpoint("buildings/#{building}/#{room}/courses")
 
     options = {
       uri: apiURL
@@ -20,4 +20,4 @@ module.exports = class API
     )
 
   apiURLForEndpoint: (endpoint) ->
-    "http://api.uwaterloo.ca/public/v2/#{endpoint}?key=#{@apiKey}"
+    "http://api.uwaterloo.ca/public/v2/#{endpoint}.json?key=#{@apiKey}"
