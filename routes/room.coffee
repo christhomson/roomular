@@ -64,7 +64,7 @@ module.exports = (app) ->
       # Split into building and room.
       req.query.room = req.query.room.split(/\s/).join('')
       roomParts = req.query.room.match(/([A-Za-z]*)([0-9]*)/)
-      building = roomParts[1]
+      building = roomParts[1].toLowerCase()
       room = roomParts[2]
 
       if building.length is 1 or building.toUpperCase() is 'EV'
