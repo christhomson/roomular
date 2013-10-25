@@ -17,6 +17,7 @@ h3 {
 
 .time {
   float: right;
+  padding-left: 5px;
 }
 
 #find_button {
