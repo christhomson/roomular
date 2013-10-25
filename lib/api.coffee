@@ -20,4 +20,4 @@ module.exports = class API
     )
 
   apiURLForEndpoint: (endpoint) ->
-    "http://api.uwaterloo.ca/public/v2/#{endpoint}.json?key=#{@apiKey}"
+    "http://api.uwaterloo.ca/v2/#{endpoint}.json?key=#{@apiKey}"
