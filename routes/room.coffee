@@ -112,11 +112,11 @@ module.exports = (app) ->
 
         # Add in gaps.
         previousEndTime = [8, 30]
-        _.each(days[day].classes, (clas, i) ->
+        _.each(_.clone(days[day].classes), (clas, i) ->
           startTime = _.map(clas.start_time.split(':'), (digit) -> parseInt(digit, 10))
 
           if calculateTimeDifference(previousEndTime, startTime) > 10
-            days[day].classes.splice(i, 0, gapClassForTimeframe(previousEndTime, startTime))
+            days[day].classes.splice(i + days[day].numberOfGaps, 0, gapClassForTimeframe(previousEndTime, startTime))
             days[day].numberOfGaps++
 
           previousEndTime = _.map(clas.end_time.split(':'), (digit) -> parseInt(digit, 10))
