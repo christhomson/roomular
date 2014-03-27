@@ -19,5 +19,20 @@ module.exports = class API
         done(err, [])
     )
 
+  getExamsForTerm:(term, done) ->
+    apiURL = @apiURLForEndpoint("/terms/#{term}/examschedule.json")
+
+    options = {
+      uri: apiURL
+      headers: {'User-Agent': 'Roomular (https://github.com/christhomson/roomular)'}
+    }
+    request(options, (err, res, body) ->
+      try
+        exams = JSON.parse(body).data
+        done(null, exams)
+      catch e
+        done(err, [])
+    )
+
   apiURLForEndpoint: (endpoint) ->
     "http://api.uwaterloo.ca/v2/#{endpoint}.json?key=#{@apiKey}"
