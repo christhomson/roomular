@@ -1,7 +1,11 @@
-UWapi = require('../lib/api')
+UWapi = require('../models/api')
 nconf = require('nconf')
 nconf.argv().env().file({ file: 'config/local.json' });
 _ = require('underscore')
+
+class RoomsController
+  exports.index = (req, res) ->
+    res.render('rooms_index')
 
 module.exports = (app) ->
   days = {
@@ -80,6 +84,7 @@ module.exports = (app) ->
   )
 
   # This function is in massive need of refactoring. It's so damn long.
+  #
   app.get('/rooms/:building/:room/:day?*', (req, res) =>
     api = new UWapi(nconf.get('uwaterloo_api_key'))
 
