@@ -1,13 +1,13 @@
 express = require('express')
 nconf = require('nconf')
-nconf.argv().env().file({ file: 'config/local.json' });
+nconf.argv().env().file({ file: 'config/local.json' })
 exphbs  = require('express3-handlebars')
+Resource = require('express-resource')
 
 @app = express()
 
-
 @app.engine('handlebars', exphbs({
-  defaultLayout: 'main'
+  defaultLayout: 'application'
   helpers: {
     downcase: (str) -> str.toLowerCase()
     upcase: (str) -> str.toUpperCase()
@@ -16,12 +16,8 @@ exphbs  = require('express3-handlebars')
 }))
 
 @app.set('view engine', 'handlebars')
-@app.use(express.static(__dirname + '/public'));
-
-@routes = {
-  room: require('./routes/room')(@app)
-  index: require('./routes/index')(@app)
-}
+@app.use(express.static(__dirname + '/public'))
+@app.resource('rooms', require('./app/controllers/rooms'))
 
 port = process.env.PORT || nconf.get('server').port
 @app.listen(port)
