@@ -3,6 +3,7 @@ nconf = require('nconf')
 nconf.argv().env().file({ file: '../../config/local.json' })
 UWapi = require('./api')
 ClassMeeting = require('./class_meeting')
+Schedule = require('./schedule')
 
 module.exports = class Room
   constructor: (buildingAndRoom) ->
@@ -28,6 +29,4 @@ module.exports = class Room
       )
 
   scheduleForDay: (day) ->
-    classes = _.filter @classes, (clas) -> clas.weekdays.match(day.regex())?
-    classes.sort (a, b) ->
-      parseInt(a.start_time.split(':')[0], 10) - parseInt(b.start_time.split(':')[0], 10)
+    new Schedule(@classes, day)

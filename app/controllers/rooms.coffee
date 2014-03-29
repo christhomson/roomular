@@ -14,5 +14,5 @@ class RoomsController
     res.render('rooms_show', {
       room: req.room
       day: day.attributes()
-      timeslots: req.room.scheduleForDay(day)
+      schedule: req.room.scheduleForDay(day)
     })

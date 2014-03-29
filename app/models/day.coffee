@@ -1,5 +1,3 @@
-request = require('request')
-
 module.exports = class Day
   DAYS = [
     { name: "Sunday", regex: /Su/ }

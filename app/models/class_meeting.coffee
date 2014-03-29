@@ -1,5 +1,3 @@
-request = require('request')
-
 module.exports = class ClassMeeting
   constructor: (attributes) ->
     @attributes = attributes
