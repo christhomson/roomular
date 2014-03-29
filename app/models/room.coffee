@@ -1,4 +1,7 @@
 request = require('request')
+nconf = require('nconf')
+nconf.argv().env().file({ file: '../../config/local.json' })
+UWapi = require('./api')
 
 module.exports = class Room
   constructor: (buildingAndRoom) ->
@@ -11,3 +14,17 @@ module.exports = class Room
       @building += @room[0]
       @room = @room.substring(1)
 
+  @load: (id, cb) ->
+    room = new Room(id)
+    room.loadClasses(cb)
+
+  loadClasses: (cb) ->
+    unless @classes?
+      api = new UWapi(nconf.get('uwaterloo_api_key'))
+      api.getCourseFromRoom(@building, @room_number, (err, classes) =>
+        @classes = classes
+        cb(null, @)
+      )
+
+  scheduleForDay: ->
+    []

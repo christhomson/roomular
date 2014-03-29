@@ -3,6 +3,9 @@ nconf = require('nconf')
 nconf.argv().env().file({ file: 'config/local.json' })
 hbs = require('express-hbs')
 Resource = require('express-resource')
+Room = require('./app/models/room')
+
+require('./app/views/helpers')()
 
 @app = express()
 
@@ -18,7 +21,7 @@ Resource = require('express-resource')
 @app.set('views', __dirname + '/app/views/')
 @app.set('view engine', 'hbs')
 @app.use(express.static(__dirname + '/public'))
-@app.resource('rooms', require('./app/controllers/rooms'))
+@app.resource('rooms', require('./app/controllers/rooms'), { load: Room.load })
 
 port = process.env.PORT || nconf.get('server').port
 @app.listen(port)
