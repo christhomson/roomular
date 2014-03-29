@@ -11,8 +11,8 @@ module.exports = class Room
     @room_number = roomParts[2]
 
     if @building.length is 1 or @building is 'EV'
-      @building += @room[0]
-      @room = @room.substring(1)
+      @building += @room_number[0]
+      @room_number = @room_number.substring(1)
 
   @load: (id, cb) ->
     room = new Room(id)
@@ -29,12 +29,12 @@ module.exports = class Room
   scheduleForDay: (day) ->
     classes = _.filter @classes, (clas) -> clas.weekdays.match(day.regex())?
     classes.sort (a, b) ->
-      parseInt(a.start_time.split(':')[0], 10) - parseInt(b.start_time.      split(':')[0], 10)
+      parseInt(a.start_time.split(':')[0], 10) - parseInt(b.start_time.split(':')[0], 10)
 
   setAdditionalClassAttributes: (classes) ->
     classes.map (clas) =>
       # [ 'Nguyen,Trien T' ] => "Trien T Nguyen"
-      clas.instructor = clas.instructors?[0]?.split(',')?.reverse()?.join(' '      ) || "Unknown Instructor"
+      clas.instructor = clas.instructors?[0]?.split(',')?.reverse()?.join(' ') || "Unknown Instructor"
       clas.classType = @determineClassType(clas)
 
       startTime = clas.start_time.split(':')
