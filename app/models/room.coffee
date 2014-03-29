@@ -1,4 +1,4 @@
-request = require('request')
+_ = require('underscore')
 nconf = require('nconf')
 nconf.argv().env().file({ file: '../../config/local.json' })
 UWapi = require('./api')
@@ -26,5 +26,6 @@ module.exports = class Room
         cb(null, @)
       )
 
-  scheduleForDay: ->
-    []
+  scheduleForDay: (day) ->
+    _.filter @classes, (clas) -> clas.weekdays.match(day.regex())?
+

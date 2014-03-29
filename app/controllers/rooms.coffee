@@ -1,20 +1,11 @@
 nconf = require('nconf')
 nconf.argv().env().file({ file: 'config/local.json' })
 _ = require('underscore')
+Day = require('../models/day')
 Room = require('../models/room')
 UWapi = require('../models/api')
 
 class RoomsController
-  days = [
-    { name: "Monday", regex: /M/ }
-    { name: "Tuesday", regex: /(T$|T[^h])/ }
-    { name: "Wednesday", regex: /W/ }
-    { name: "Thursday", regex: /Th/ }
-    { name: "Friday", regex: /F/ }
-    { name: "Saturday", regex: /(S$|S[^u])/ }
-    { name: "Sunday", regex: /Su/ }
-  ]
-
   exports.index = (req, res) ->
     res.render('rooms_index')
 
@@ -163,11 +154,9 @@ module.exports = (app) ->
     )
   )
   exports.show = (req, res) ->
-    room = new Room(req.params.room)
-    res.end("This room is room #{room.room_number} in #{room.building}")
-    day = days[0] # TODO
+    day = new Day()
     res.render('rooms_show', {
       room: req.room
-      day: day
+      day: day.attributes()
       timeslots: req.room.scheduleForDay(day)
     })
