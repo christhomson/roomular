@@ -11,7 +11,6 @@ class RoomsController
 
   exports.show = (req, res) ->
     day = new Day()
-    console.log(req.room.scheduleForDay(day))
     res.render('rooms_show', {
       room: req.room
       day: day.attributes()

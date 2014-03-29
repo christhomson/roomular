@@ -4,7 +4,7 @@ module.exports = class API
   constructor: (apiKey) ->
     @apiKey = apiKey
 
-  getCourseFromRoom: (building, room, done) ->
+  getClassesForRoom: (building, room, done) ->
     apiURL = @apiURLForEndpoint("buildings/#{building}/#{room}/courses")
 
     options = {
