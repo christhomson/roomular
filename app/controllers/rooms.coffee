@@ -7,7 +7,10 @@ UWapi = require('../models/api')
 
 class RoomsController
   exports.index = (req, res) ->
-    res.render('rooms_index')
+    if req.query.room
+      res.redirect("/rooms/#{req.query.room}")
+    else
+      res.render('rooms_index')
 
   exports.show = (req, res) ->
     day = new Day()

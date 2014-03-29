@@ -23,6 +23,8 @@ require('./app/views/helpers')()
 @app.use(express.static(__dirname + '/public'))
 @app.resource('rooms', require('./app/controllers/rooms'), { load: Room.load })
 
+@app.get '/', (req, res) -> res.redirect('/rooms')
+
 port = process.env.PORT || nconf.get('server').port
 @app.listen(port)
 console.log("Roomular started on port #{port}.")
