@@ -1,7 +1,8 @@
-UWapi = require('../models/api')
 nconf = require('nconf')
 nconf.argv().env().file({ file: 'config/local.json' });
 _ = require('underscore')
+Room = require('../models/room')
+UWapi = require('../models/api')
 
 class RoomsController
   exports.index = (req, res) ->
@@ -151,3 +152,6 @@ module.exports = (app) ->
       res.render('room', day)
     )
   )
+  exports.show = (req, res) ->
+    room = new Room(req.params.room)
+    res.end("This room is room #{room.room_number} in #{room.building}")
