@@ -16,10 +16,11 @@ module.exports = class Day
       @date = DAYS[date.getDay()]
     else if typeof date is 'string'
       @date = _.find(DAYS, (day) -> day.name.toLowerCase() is date.toLowerCase())
+      @date = DAYS[new Date().getDay()] unless @date?
     else
       @date = DAYS[new Date().getDay()]
 
-    @date = @nextWeekday()
+    @date = @nextWeekday() if @isWeekend()
 
   name: ->
     @date.name
@@ -38,6 +39,9 @@ module.exports = class Day
       DAYS[1]
     else
       DAYS[@date.index + 1]
+
+  isWeekend: ->
+    @date.index is 6 or @date.index is 0
 
   attributes: ->
     name: @name()
