@@ -3,3 +3,5 @@ node_js:
   - "0.10"
 notifications:
   email: false
+before_script: cp config/local.json.sample config/local.json
+secure: "gZS1RyUlebqTVKwq0CpDQOJZoaVcHST1hP5Ffx2iSZaYAidFsWQDhkfDGS82U7SwTKeERvwF7S3M+COQ+NukC9UX4bQx1VQ8wJAVYv8gtj3JcZWhSTchk6zciJapVDRuoUuOt2OCXZvI5d/C8R+r1bAh4qECZfg2e/z17Qry24s="

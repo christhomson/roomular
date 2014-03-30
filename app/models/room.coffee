@@ -24,7 +24,8 @@ module.exports = class Room
 
   loadClasses: (cb) ->
     unless @classes?
-      api = new UWapi(nconf.get('uwaterloo_api_key'))
+      apiKey = process.env.UW_API_KEY || nconf.get('uwaterloo_api_key')
+      api = new UWapi(apiKey)
       api.getClassesForRoom(@building, @room_number, (err, classes) =>
         @classes = classes.map (clas) -> new ClassMeeting(clas).attributes
         cb(null, @)

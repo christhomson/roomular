@@ -16,6 +16,7 @@ describe "[Integration] Finding a room's schedule", ->
 
       @browser.fill('room', 'MC 2054').pressButton('Find schedule', =>
         assert.ok(@browser.success)
+        assert @browser.queryAll(".classes li").length > 0
         done()
       )
     )
