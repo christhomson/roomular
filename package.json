@@ -13,7 +13,9 @@
     "request": ">= 2.x",
     "underscore": "~1.5.2",
     "express-resource": "~1.0.0",
-    "express-hbs": "~0.7.9"
+    "express-hbs": "~0.7.9",
+    "zombie": "~2.0.0-alpha31",
+    "mocha": "~1.18.2"
   },
   "scripts": {}
 }

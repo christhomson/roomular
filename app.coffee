@@ -8,6 +8,7 @@ Room = require('./app/models/room')
 require('./app/views/helpers')()
 
 @app = express()
+module.exports = @app
 
 @app.engine('hbs', hbs.express3({
   defaultLayout: 'app/views/layouts/application'
@@ -30,6 +31,7 @@ require('./app/views/helpers')()
   path += "?day=#{req.params.day}" if req.params.day?
   res.redirect(path)
 
-port = process.env.PORT || nconf.get('server').port
-@app.listen(port)
-console.log("Roomular started on port #{port}.")
+unless module.parent?
+  port = process.env.PORT || nconf.get('server').port
+  @app.listen(port)
+  console.log("Roomular started on port #{port}.")

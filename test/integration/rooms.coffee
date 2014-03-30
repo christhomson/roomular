@@ -1,0 +1,21 @@
+assert = require('assert')
+Browser = require('zombie')
+app = require('../../app')
+
+describe "Finding a room's schedule", ->
+  before ->
+    @server = app.listen(3000)
+    @browser = new Browser({ site: 'http://127.0.0.1:3000' })
+
+  after (done) ->
+    @server.close(done)
+
+  it "should be possible to navigate to a room's schedule", (done) ->
+    @browser.visit('/', =>
+      assert.ok(@browser.success)
+
+      @browser.fill('room', 'MC 2054').pressButton('Find schedule', =>
+        assert.ok(@browser.success)
+        done()
+      )
+    )

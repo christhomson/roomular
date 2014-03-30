@@ -1,0 +1,4 @@
+--compilers coffee:coffee-script/register
+--reporter spec
+-t 30s
+test/**/*.coffee
