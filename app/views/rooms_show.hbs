@@ -1,0 +1,41 @@
+<form method="GET" action="/rooms">
+  <input type="text" class="form-control input-lg" placeholder="{{upcase room.building}} {{room.room_number}}" id="room" name="room">
+  <button type="button" class="btn btn-primary" id="find_button">Find schedule <span class="glyphicon glyphicon-chevron-right"></span></button>
+</form>
+
+<h2>{{day.name}} in {{upcase room.building}} {{room.room_number}}</h2>
+<ul class="classes">
+{{#each schedule.timeslots}}
+  {{#if isGap}}
+    <li class="gap half-hours-{{halfHours}}">
+      <span class="time">{{start_time}} - {{end_time}}</span>
+      <h3>Gap</h3>
+      <small>This room is free.</small>
+    </li>
+  {{else}}
+    <li class="{{subject}}{{catalog_number}} half-hours-{{halfHours}}">
+      <span class="time">{{start_time}} - {{end_time}}</span>
+      <h3><a href="http://www.ucalendar.uwaterloo.ca/1415/COURSE/course-{{subject}}.html#{{subject}}{{catalog_number}}">{{subject}} {{catalog_number}}</a> &middot; {{title}}</h3>
+      <small>{{classType}} &middot; {{instructor}}</small>
+    </li>
+  {{/if}}
+{{else}}
+  <div class="alert alert-danger push-down">There are no classes in {{upcase room.building}} {{room.room_number}} on {{day.name}}.</div>
+{{/each}}
+</ul>
+
+<div id="time-traveler">
+  <a href="/rooms/{{downcase room.id}}?day={{downcase day.previousWeekday.name}}" class="previous"><span class="glyphicon glyphicon-chevron-left"></span> {{day.previousWeekday.name}}</a>
+  <a href="/rooms/{{downcase room.id}}?day={{downcase day.nextWeekday.name}}" class="next">{{day.nextWeekday.name}} <span class="glyphicon glyphicon-chevron-right"></span></a>
+</div>
+
+<script type="text/javascript">
+  mixpanel.track(
+    "Viewed Room Schedule",
+    {
+      'Building and Room': '{{room.building}} {{room.room_number}}',
+      'Building': '{{room.building}}',
+      'Room Number': '{{room.room_number}}',
+      'Day of Week': '{{day.name}}'
+    });
+</script>
