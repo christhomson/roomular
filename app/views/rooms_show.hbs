@@ -24,6 +24,11 @@
 {{/each}}
 </ul>
 
+<div id="time-traveler">
+  <a href="/rooms/{{downcase room.id}}?day={{downcase day.previousWeekday.name}}" class="previous"><span class="glyphicon glyphicon-chevron-left"></span> {{day.previousWeekday.name}}</a>
+  <a href="/rooms/{{downcase room.id}}?day={{downcase day.nextWeekday.name}}" class="next">{{day.nextWeekday.name}} <span class="glyphicon glyphicon-chevron-right"></span></a>
+</div>
+
 <script type="text/javascript">
   mixpanel.track(
     "Viewed Room Schedule",

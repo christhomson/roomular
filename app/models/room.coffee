@@ -16,6 +16,8 @@ module.exports = class Room
       @building += @room_number[0]
       @room_number = @room_number.substring(1)
 
+    @id = "#{@building}#{@room_number}"
+
   @load: (id, cb) ->
     room = new Room(id)
     room.loadClasses(cb)
