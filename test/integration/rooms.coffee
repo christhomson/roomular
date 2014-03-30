@@ -2,7 +2,7 @@ assert = require('assert')
 Browser = require('zombie')
 app = require('../../app')
 
-describe "Finding a room's schedule", ->
+describe "[Integration] Finding a room's schedule", ->
   before ->
     @server = app.listen(3000)
     @browser = new Browser({ site: 'http://127.0.0.1:3000' })
