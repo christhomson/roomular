@@ -24,7 +24,11 @@ require('./app/views/helpers')()
 @app.resource('rooms', require('./app/controllers/rooms'), { load: Room.load })
 
 @app.get '/', (req, res) -> res.redirect('/rooms')
-@app.get '/rooms/:building/:room', (req, res) -> res.redirect("/rooms/#{req.params.building}#{req.params.room}")
+
+@app.get '/rooms/:building/:room/:day?', (req, res) ->
+  path = "/rooms/#{req.params.building}#{req.params.room}"
+  path += "?day=#{req.params.day}" if req.params.day?
+  res.redirect(path)
 
 port = process.env.PORT || nconf.get('server').port
 @app.listen(port)
