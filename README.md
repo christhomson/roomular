@@ -11,3 +11,6 @@ A web app for finding nearby classes (or study spaces) at the University of Wate
 5. `cp config/local.json.sample config/local.json`
 6. Edit `config/local.json` to include your [UW API key](http://api.uwaterloo.ca/#!/keygen) and [Mixpanel](http://mixpanel.com) token.
 7. `coffee app.coffee` (or `nodemon app.coffee` if you use [`nodemon`](https://github.com/remy/nodemon)).
+
+## Tests
+You can run the tests with `npm test`.
