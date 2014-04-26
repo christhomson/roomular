@@ -1,4 +1,4 @@
-request = require('request')
+request = require 'request'
 
 module.exports = class API
   constructor: (apiKey) ->

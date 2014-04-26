@@ -1,5 +1,5 @@
-hbs = require('express-hbs')
-nconf = require('nconf')
+hbs = require 'express-hbs'
+nconf = require 'nconf'
 nconf.argv().env().file({ file: '../../config/local.json' })
 
 module.exports = ->

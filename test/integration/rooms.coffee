@@ -1,6 +1,6 @@
-assert = require('assert')
-Browser = require('zombie')
-app = require('../../app')
+assert = require 'assert'
+Browser = require 'zombie'
+app = require '../../app'
 
 describe "[Integration] Finding a room's schedule", ->
   before ->

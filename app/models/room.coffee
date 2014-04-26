@@ -1,9 +1,9 @@
-_ = require('underscore')
-nconf = require('nconf')
+_ = require 'underscore'
+nconf = require 'nconf'
 nconf.argv().env().file({ file: '../../config/local.json' })
-UWapi = require('./api')
-ClassMeeting = require('./class_meeting')
-Schedule = require('./schedule')
+UWapi = require './api'
+ClassMeeting = require './class_meeting'
+Schedule = require './schedule'
 
 module.exports = class Room
   constructor: (buildingAndRoom) ->

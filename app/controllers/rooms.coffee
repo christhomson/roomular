@@ -1,9 +1,9 @@
-nconf = require('nconf')
+nconf = require 'nconf'
 nconf.argv().env().file({ file: 'config/local.json' })
-_ = require('underscore')
-Day = require('../models/day')
-Room = require('../models/room')
-UWapi = require('../models/api')
+_ = require 'underscore'
+Day = require '../models/day'
+Room = require '../models/room'
+UWapi = require '../models/api'
 
 class RoomsController
   exports.index = (req, res) ->

@@ -1,9 +1,9 @@
-express = require('express')
-nconf = require('nconf')
+express = require 'express'
+nconf = require 'nconf'
 nconf.argv().env().file({ file: 'config/local.json' })
-hbs = require('express-hbs')
-Resource = require('express-resource')
-Room = require('./app/models/room')
+hbs = require 'express-hbs'
+Resource = require 'express-resource'
+Room = require './app/models/room'
 
 require('./app/views/helpers')()
 

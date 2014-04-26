@@ -1,4 +1,4 @@
-_ = require('underscore')
+_ = require 'underscore'
 
 module.exports = class Schedule
   constructor: (classes, day) ->
