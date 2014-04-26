@@ -34,9 +34,9 @@ module.exports = class ClassMeeting
       else 'Meeting'
 
   setHalfHours: ->
-      startTime = @attributes.start_time.split(':')
-      endTime = @attributes.end_time.split(':')
-      hours = endTime[0] - startTime[0]
-      minutes = endTime[1] - startTime[1]
+    startTime = @attributes.start_time.split(':')
+    endTime = @attributes.end_time.split(':')
+    hours = endTime[0] - startTime[0]
+    minutes = endTime[1] - startTime[1]
 
-      @attributes.halfHours = (hours * 2) + (Math.ceil(minutes / 30.0))
+    @attributes.halfHours = (hours * 2) + (Math.ceil(minutes / 30.0))
